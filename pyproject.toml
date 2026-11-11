@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "talentscout-portfolio"
+version = "0.1.0"
+description = "Evidence-first Claude candidate review, with explicit human control."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = ["anthropic>=0.86,<1", "pydantic>=2.11,<3", "python-dotenv>=1.1,<2"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3,<10", "pytest-cov>=6,<8", "ruff>=0.11,<1", "pillow>=11,<13"]
+
+[project.scripts]
+talent_scout = "talentscout.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/talentscout"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
