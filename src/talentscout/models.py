@@ -94,7 +94,12 @@ class Hello(Contract):
 def score(analysis: Analysis, job: Job) -> Decimal:
     """Points describe documented evidence, never probability of job performance."""
     weights = {criterion.id: criterion.weight for criterion in job.criteria}
-    factors = {Status.SUPPORTED: Decimal(1), Status.PARTIAL: Decimal("0.5"),
-               Status.NOT_STATED: Decimal(0)}
-    return sum((Decimal(weights[item.criterion_id]) * factors[item.status]
-                for item in analysis.evidence), Decimal(0))
+    factors = {
+        Status.SUPPORTED: Decimal(1),
+        Status.PARTIAL: Decimal("0.5"),
+        Status.NOT_STATED: Decimal(0),
+    }
+    return sum(
+        (Decimal(weights[item.criterion_id]) * factors[item.status] for item in analysis.evidence),
+        Decimal(0),
+    )

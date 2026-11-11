@@ -19,7 +19,8 @@ from .utils import Audit, Settings
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="TalentScout: evidence-first candidate review (offline by default).")
+        description="TalentScout: evidence-first candidate review (offline by default)."
+    )
     parser.add_argument("--job", type=Path, default=Path("data/example_job.txt"))
     parser.add_argument("--resumes", type=Path, default=Path("data/example_resumes.csv"))
     mode = parser.add_mutually_exclusive_group()
@@ -29,7 +30,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--hello", action="store_true", help="test provider connectivity")
     parser.add_argument("--budget", help="maximum estimated USD per live run")
     parser.add_argument("--format", choices=("text", "json"), default="text")
-    parser.add_argument("--output", type=Path, help="write a JSON report (contains candidate evidence)")
+    parser.add_argument(
+        "--output", type=Path, help="write a JSON report (contains candidate evidence)"
+    )
     parser.add_argument("--audit-log", type=Path, help="append metadata-only JSONL events")
     parser.add_argument("--metrics", action="store_true")
     parser.add_argument("--verbose", action="store_true", help="log metadata to stderr")
@@ -60,8 +63,12 @@ def render_text(result) -> None:
     print("\nEvidence points / 100 — documented coverage, not predicted performance\n")
     names = {item.id: item.name for item in result.candidates}
     for index, item in enumerate(result.judgment.ranking, start=1):
-        print(safe_terminal(f"{index}. {names[item.candidate_id]} [{item.candidate_id}]"
-                            f"  {result.scores[item.candidate_id]:.1f}"))
+        print(
+            safe_terminal(
+                f"{index}. {names[item.candidate_id]} [{item.candidate_id}]"
+                f"  {result.scores[item.candidate_id]:.1f}"
+            )
+        )
         print(safe_terminal(f"   {item.reason}"))
     for analysis in result.analyses:
         print(safe_terminal(f"\nSource evidence / {analysis.candidate_id}"))
@@ -84,6 +91,13 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--review uses text output; use --output to save the reviewed JSON report")
     if args.audit_log and args.output and args.audit_log.resolve() == args.output.resolve():
         parser.error("audit log and report must use different paths")
+    inputs = {
+        path.resolve() for path in (args.job, args.resumes, args.fixtures, Path.cwd() / ".env")
+    }
+    if any(path and path.resolve() in inputs for path in (args.audit_log, args.output)):
+        parser.error("report and audit paths must not overwrite input or configuration files")
+    if args.output and args.output.exists():
+        parser.error("output already exists; choose a new report path")
     logging.basicConfig(level=logging.WARNING, format="%(message)s")
     logging.getLogger("talentscout").setLevel(logging.INFO if args.verbose else logging.WARNING)
     # Explicit file only: do not search parent directories for unrelated credentials.
@@ -91,21 +105,34 @@ def main(argv: list[str] | None = None) -> int:
     audit = Audit(args.audit_log)
     provider = None
     try:
-        provider = (ClaudeProvider(Settings.from_env(args.budget), audit) if args.live
-                    else OfflineProvider(args.fixtures, audit))
+        provider = (
+            ClaudeProvider(Settings.from_env(args.budget), audit)
+            if args.live
+            else OfflineProvider(args.fixtures, audit)
+        )
         if args.hello:
             hello = provider.request("hello", HELLO, {"action": "hello"}, Hello)
-            print(json.dumps(hello.model_dump()) if args.format == "json"
-                  else safe_terminal(hello.message))
+            print(
+                json.dumps(hello.model_dump())
+                if args.format == "json"
+                else safe_terminal(hello.message)
+            )
             return 0
         job, candidates = load_job(args.job), load_candidates(args.resumes)
-        audit.emit("run_started", mode="live" if args.live else "offline",
-                   candidates=len(candidates), criteria=len(job.criteria))
+        audit.emit(
+            "run_started",
+            mode="live" if args.live else "offline",
+            candidates=len(candidates),
+            criteria=len(job.criteria),
+        )
         result = run_pipeline(provider, job, candidates)
         approval = "pending" if result.approval_allowed else "blocked"
         if args.format == "text":
-            print("Mode: LIVE (data sent to Anthropic)" if args.live
-                  else "Mode: OFFLINE (curated fixtures, zero API calls)")
+            print(
+                "Mode: LIVE (data sent to Anthropic)"
+                if args.live
+                else "Mode: OFFLINE (curated fixtures, zero API calls)"
+            )
             render_text(result)
         if args.review:
             approval = review(result, audit)
@@ -121,7 +148,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     except (OSError, ValueError, KeyboardInterrupt) as exc:
         # Validation errors may echo documents. Emit only their type, never their values.
-        message = "invalid input or model response" if isinstance(exc, ValidationError) else str(exc)
+        message = (
+            "invalid input or model response" if isinstance(exc, ValidationError) else str(exc)
+        )
         if isinstance(exc, OSError):
             message = "file operation failed; check paths, permissions and existing output files"
         if isinstance(exc, KeyboardInterrupt):

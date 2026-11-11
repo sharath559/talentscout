@@ -9,8 +9,11 @@ from .providers import Provider
 
 
 def analyze(provider: Provider, job: Job, candidate: Candidate) -> Analysis:
-    payload = {"job": job.model_dump(mode="json"), "candidate_id": candidate.id,
-               "resume": candidate.resume}
+    payload = {
+        "job": job.model_dump(mode="json"),
+        "candidate_id": candidate.id,
+        "resume": candidate.resume,
+    }
     result = provider.request(f"analyzer:{candidate.id}", prompts.ANALYZER, payload, Analysis)
     validate_analysis(result, job, candidate)
     return result
@@ -31,10 +34,12 @@ def validate_analysis(result: Analysis, job: Job, candidate: Candidate) -> None:
 def judge_payload(job: Job, analyses: list[Analysis]) -> dict:
     points = {item.candidate_id: score(item, job) for item in analyses}
     order = sorted(points, key=lambda key: (-points[key], key))
-    return {"job": job.model_dump(mode="json"),
-            "analyses": [item.model_dump(mode="json") for item in analyses],
-            "scores": {key: str(value) for key, value in points.items()},
-            "expected_order": order}
+    return {
+        "job": job.model_dump(mode="json"),
+        "analyses": [item.model_dump(mode="json") for item in analyses],
+        "scores": {key: str(value) for key, value in points.items()},
+        "expected_order": order,
+    }
 
 
 def judge(provider: Provider, job: Job, analyses: list[Analysis]) -> Judgment:
@@ -45,18 +50,30 @@ def judge(provider: Provider, job: Job, analyses: list[Analysis]) -> Judgment:
     return result
 
 
-def fairness_payload(job: Job, candidates: list[Candidate], analyses: list[Analysis],
-                     judgment: Judgment) -> dict:
-    return {"job": job.model_dump(mode="json"),
-            "sources": [{"candidate_id": item.id, "resume": item.resume} for item in candidates],
-            "analyses": [item.model_dump(mode="json") for item in analyses],
-            "judgment": judgment.model_dump(mode="json")}
+def fairness_payload(
+    job: Job, candidates: list[Candidate], analyses: list[Analysis], judgment: Judgment
+) -> dict:
+    return {
+        "job": job.model_dump(mode="json"),
+        "sources": [{"candidate_id": item.id, "resume": item.resume} for item in candidates],
+        "analyses": [item.model_dump(mode="json") for item in analyses],
+        "judgment": judgment.model_dump(mode="json"),
+    }
 
 
-def review_fairness(provider: Provider, job: Job, candidates: list[Candidate],
-                    analyses: list[Analysis], judgment: Judgment) -> FairnessReview:
-    result = provider.request("fairness", prompts.FAIRNESS,
-                              fairness_payload(job, candidates, analyses, judgment), FairnessReview)
+def review_fairness(
+    provider: Provider,
+    job: Job,
+    candidates: list[Candidate],
+    analyses: list[Analysis],
+    judgment: Judgment,
+) -> FairnessReview:
+    result = provider.request(
+        "fairness",
+        prompts.FAIRNESS,
+        fairness_payload(job, candidates, analyses, judgment),
+        FairnessReview,
+    )
     ids = {item.id for item in candidates}
     if any(finding.candidate_id not in ids for finding in result.findings):
         raise ValueError("fairness finding references an unknown candidate")
@@ -82,15 +99,23 @@ class RunResult:
     def report(self, approval: str = "pending") -> dict:
         names = {item.id: item.name for item in self.candidates}
         return {
-            "schema_version": "1.0", "prompt_version": prompts.VERSION,
+            "schema_version": "1.0",
+            "prompt_version": prompts.VERSION,
             "purpose": "synthetic candidate evidence review; no employment decision",
             "job": self.job.model_dump(mode="json"),
-            "ranking": [{"candidate_id": item.candidate_id, "name": names[item.candidate_id],
-                         "evidence_points": str(self.scores[item.candidate_id]),
-                         "reason": item.reason} for item in self.judgment.ranking],
+            "ranking": [
+                {
+                    "candidate_id": item.candidate_id,
+                    "name": names[item.candidate_id],
+                    "evidence_points": str(self.scores[item.candidate_id]),
+                    "reason": item.reason,
+                }
+                for item in self.judgment.ranking
+            ],
             "analyses": [item.model_dump(mode="json") for item in self.analyses],
             "fairness": self.fairness.model_dump(mode="json"),
-            "approval": approval, "approval_allowed": self.approval_allowed,
+            "approval": approval,
+            "approval_allowed": self.approval_allowed,
         }
 
 

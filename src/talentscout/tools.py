@@ -38,15 +38,17 @@ def load_job(path: Path) -> Job:
             criteria.append({"id": key, "weight": int(weight), "description": detail})
         else:
             description.append(line)
-    return Job.model_validate({"title": lines[0], "description": " ".join(description),
-                               "criteria": criteria})
+    return Job.model_validate(
+        {"title": lines[0], "description": " ".join(description), "criteria": criteria}
+    )
 
 
 def sanitize_resume(text: str) -> str:
     """Remove common contact patterns; this is deliberately not full anonymization."""
     text = re.sub(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}", "[email removed]", text)
-    text = re.sub(r"(?<!\w)(?:\+?1[-. ]?)?\(?\d{3}\)?[-. ]\d{3}[-. ]\d{4}(?!\w)",
-                  "[phone removed]", text)
+    text = re.sub(
+        r"(?<!\w)(?:\+?1[-. ]?)?\(?\d{3}\)?[-. ]\d{3}[-. ]\d{4}(?!\w)", "[phone removed]", text
+    )
     return text.replace("\x00", "")
 
 
@@ -61,8 +63,11 @@ def load_candidates(path: Path) -> list[Candidate]:
             raise ValueError("at most 20 candidates per run")
         if None in row or any(value is None for value in row.values()):
             raise ValueError("malformed CSV row")
-        candidates.append(Candidate(id=row["candidate_id"], name=row["name"],
-                                    resume=sanitize_resume(row["resume"])))
+        candidates.append(
+            Candidate(
+                id=row["candidate_id"], name=row["name"], resume=sanitize_resume(row["resume"])
+            )
+        )
     if not candidates or len({item.id for item in candidates}) != len(candidates):
         raise ValueError("provide at least one candidate, with unique IDs")
     return candidates

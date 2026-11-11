@@ -84,13 +84,17 @@ class Budget:
         self.uncertain_calls += 1
 
     def metrics(self) -> dict:
-        return {"model": self.settings.model, "calls": self.calls,
-                "input_tokens": self.input_tokens, "output_tokens": self.output_tokens,
-                "estimated_cost_usd": str(self.spent),
-                "unresolved_reservation_usd": str(self.reserved),
-                "uncertain_calls": self.uncertain_calls,
-                "budget_usd": str(self.settings.budget),
-                "elapsed_seconds": round(monotonic() - self.started, 3)}
+        return {
+            "model": self.settings.model,
+            "calls": self.calls,
+            "input_tokens": self.input_tokens,
+            "output_tokens": self.output_tokens,
+            "estimated_cost_usd": str(self.spent),
+            "unresolved_reservation_usd": str(self.reserved),
+            "uncertain_calls": self.uncertain_calls,
+            "budget_usd": str(self.settings.budget),
+            "elapsed_seconds": round(monotonic() - self.started, 3),
+        }
 
 
 class Audit:
