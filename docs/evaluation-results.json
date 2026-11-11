@@ -1,0 +1,38 @@
+{
+  "mode": "offline_fixture_regression",
+  "scope": "tiny synthetic sample; no fairness, accuracy or hiring validity certification",
+  "checks": {
+    "synthetic_reference_order": true,
+    "synthetic_reference_points": true,
+    "display_name_counterfactual_points": true,
+    "human_review_required": true,
+    "default_approval_pending": true
+  },
+  "passed": true,
+  "reference_order": [
+    "C001",
+    "C002",
+    "C003",
+    "C004"
+  ],
+  "observed_order": [
+    "C001",
+    "C002",
+    "C003",
+    "C004"
+  ],
+  "observed_evidence_points": {
+    "C001": "100",
+    "C002": "72.5",
+    "C003": "60",
+    "C004": "30.0"
+  },
+  "model_quality_evaluated": false,
+  "metrics": {
+    "mode": "offline",
+    "fixture_calls": 12,
+    "api_calls": 0,
+    "estimated_cost_usd": "0",
+    "model": "curated-fixtures"
+  }
+}
