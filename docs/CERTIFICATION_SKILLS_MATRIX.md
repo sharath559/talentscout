@@ -17,7 +17,7 @@ claim official syllabus coverage, accreditation or endorsement.
 | Security and human control | Limited local tools, no execution/ATS, terminal review, unresolved flags block | No authentication or production approval service |
 | Evaluation and observability | Fixtures, contract tests, SDK mock, optional live eval, metadata audit | Offline results do not measure fairness or live quality |
 | Local data tools | Bounded CSV/job parsing and contact-pattern removal | Not model-selected tool calling or MCP |
-| Reproducibility | Lockfile, scripts, CI configuration, milestone commits, demo artifacts | Remote CI has not run until publication |
+| Reproducibility | Lockfile, scripts, passing Python 3.10/3.12/3.14 CI, milestone commits, demo artifacts | CI exercises offline contracts, not paid inference |
 
 An honest interview answer distinguishes implemented controls, demonstrated behavior,
 unmeasured quality, and proposed extensions. That distinction is a central project feature.

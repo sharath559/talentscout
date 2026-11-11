@@ -4,7 +4,10 @@
 
 The local build ran on macOS with CPython 3.14.5. The initial verification completed
 **61 tests, all passing, with 93% statement coverage**. The interpreter, commands and
-test counts describe an actual local run; configured CI matrix coverage is not claimed.
+test counts describe an actual local run. The published
+[GitHub Actions run](https://github.com/sharath559/talentscout/actions/runs/43057637526)
+also passed all lint, formatting, tests and offline regression steps on Ubuntu with
+Python 3.10, 3.12 and 3.14.
 
 ```bash
 uv sync --frozen --extra dev

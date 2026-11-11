@@ -2,6 +2,7 @@
 
 **Evidence before recommendations. Human judgment before decisions.**
 
+[![Python checks](https://github.com/sharath559/talentscout/actions/workflows/ci.yml/badge.svg)](https://github.com/sharath559/talentscout/actions/workflows/ci.yml)
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB)
 ![Offline demo](https://img.shields.io/badge/demo-offline%20%2F%20%240-16877B)
 ![License MIT](https://img.shields.io/badge/license-MIT-gray)
@@ -130,7 +131,8 @@ uv run python scripts/evaluate.py --live --budget 0.50 --output artifacts/live-e
 
 All evaluation calls share the same budget object. Results may differ from human-authored
 expectations; failures are evidence to investigate. CI runs offline checks on Python
-3.10, 3.12 and 3.14; only the locally recorded interpreter has actually been tested so far.
+3.10, 3.12 and 3.14; all three jobs passed in the
+[published validation run](https://github.com/sharath559/talentscout/actions/runs/43057637526).
 Optional hooks: install `pre-commit`, then run `pre-commit install`.
 
 ## Portfolio guide

@@ -23,6 +23,10 @@ Commit subjects describe concrete checkpoints; `git log --oneline --reverse` is 
 6. **Demo and release checkpoint.** Captured actual offline output as a transcript, asciinema
    event file and rendered GIF. Manually exercised terminal decline. Completed final lint,
    tests, regression and packaging checks before preparing the public repository.
+7. **Publication and CI.** Published [sharath559/talentscout](https://github.com/sharath559/talentscout).
+   [CI run 43057637526](https://github.com/sharath559/talentscout/actions/runs/43057637526)
+   passed all three Python jobs (3.10, 3.12, 3.14), including lint, format, tests and offline
+   evaluation. Both wheel and source distribution built successfully locally.
 
 ## Deviations from the original proposal
 
