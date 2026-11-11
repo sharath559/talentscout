@@ -1,0 +1,68 @@
+Mode: OFFLINE (curated fixtures, zero API calls)
+
+TALENTSCOUT / EVIDENCE BEFORE RECOMMENDATIONS
+Backend Engineer / Developer Platform
+
+Evidence points / 100 — documented coverage, not predicted performance
+
+1. Alex Morgan [C001]  100.0
+   Evidence covers all four criteria. A human should verify depth and context.
+2. Jordan Lee [C002]  72.5
+   Python and PostgreSQL are documented; test scope is partial and operations is not stated.
+3. Casey Rivera [C003]  60.0
+   Python APIs and backend tests are documented; PostgreSQL and operations are not stated.
+4. Sam Patel [C004]  30.0
+   Some Python and automated testing exposure is documented; backend depth needs clarification.
+ Source evidence / C001
+  python: supported
+    "Built Python APIs for an internal billing service."
+    Direct evidence of Python backend API implementation.
+  postgres: supported
+    "Designed PostgreSQL schemas and migrations."
+    Direct evidence of PostgreSQL database design and migration work.
+  testing: supported
+    "Wrote pytest integration tests for payment workflows."
+    Explicit automated backend integration testing.
+  reliability: supported
+    "Operated production services and handled on-call incidents."
+    Explicit production operations and incident response work.
+ Source evidence / C002
+  python: supported
+    "Built Python APIs for a document management service."
+    Direct evidence of Python backend API implementation.
+  postgres: supported
+    "Designed PostgreSQL schemas and migrations."
+    Explicit PostgreSQL design and migration work.
+  testing: partial
+    "Wrote unit tests for utility functions during a training project."
+    Some automated testing is documented; backend test scope is unclear.
+  reliability: not_stated
+    Production operation ownership is not stated; ask the candidate.
+ Source evidence / C003
+  python: supported
+    "Built Python APIs for a community project."
+    Explicit Python API work; project context does not reduce credit.
+  postgres: not_stated
+    SQLite is documented, but PostgreSQL experience is not stated.
+  testing: supported
+    "Wrote pytest integration tests for API endpoints."
+    Explicit automated backend testing of API endpoints.
+  reliability: not_stated
+    Production operation ownership is not stated; ask the candidate.
+ Source evidence / C004
+  python: partial
+    "Completed a Python tutorial with basic exercises."
+    Python exposure is documented, but backend API implementation is not stated.
+  postgres: not_stated
+    PostgreSQL experience is not stated; ask the candidate.
+  testing: partial
+    "Wrote automated browser tests for the frontend."
+    Automated tests are documented; backend testing is not stated.
+  reliability: not_stated
+    Production operation ownership is not stated; ask the candidate.
+
+Fairness review / human review required
+No specific concern flagged in this curated demo. This is not a fairness certification; a person must review all evidence and missing context.
+
+No employment action is performed. Review the source resumes and rubric.
+{"api_calls": 0, "estimated_cost_usd": "0", "fixture_calls": 6, "mode": "offline", "model": "curated-fixtures"}
