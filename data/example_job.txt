@@ -1,0 +1,6 @@
+Backend Engineer / Developer Platform
+Build and operate Python APIs backed by PostgreSQL. Write automated tests and own service reliability. Review only documented job-related evidence; a missing detail is a question for a person, not a rejection reason.
+criterion: python | 35 | Explicit experience building Python backend APIs or services.
+criterion: postgres | 25 | Explicit experience designing or maintaining PostgreSQL databases.
+criterion: testing | 25 | Explicit experience writing automated backend tests.
+criterion: reliability | 15 | Explicit experience operating production services or handling incidents.

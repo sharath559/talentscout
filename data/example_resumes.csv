@@ -1,0 +1,5 @@
+candidate_id,name,resume
+C001,Alex Morgan,"Built Python APIs for an internal billing service. Designed PostgreSQL schemas and migrations. Wrote pytest integration tests for payment workflows. Operated production services and handled on-call incidents."
+C002,Jordan Lee,"Built Python APIs for a document management service. Designed PostgreSQL schemas and migrations. Wrote unit tests for utility functions during a training project. Seeking a role with production operations mentoring."
+C003,Casey Rivera,"Built Python APIs for a community project. Used SQLite for a prototype database. Wrote pytest integration tests for API endpoints. Production operations experience is not described in this resume."
+C004,Sam Patel,"Built JavaScript frontends for a library catalogue. Completed a Python tutorial with basic exercises. Wrote automated browser tests for the frontend. Backend database design and production operations are not described."

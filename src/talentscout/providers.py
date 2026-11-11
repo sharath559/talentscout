@@ -68,16 +68,16 @@ class ClaudeProvider:
         self._checked_model = True
 
     def request(self, key: str, system: str, payload: dict, contract: type[T]) -> T:
+        from anthropic import transform_schema
+
         self._check_model()
         request = {"model": self.settings.model, "system": system,
-                   "messages": [{"role": "user", "content": json.dumps(payload)}]}
-        schema = contract.model_json_schema()
-        # Count the response schema too; counting schemas via system text is approximate.
-        # The reservation adds a margin and full maximum output allowance.
+                   "messages": [{"role": "user", "content": json.dumps(payload)}],
+                   "output_config": {"format": {"type": "json_schema",
+                                                "schema": transform_schema(contract)}}}
+        # Count precisely the same input configuration that will be sent to generation.
         try:
-            count = self.client.messages.count_tokens(
-                **{**request, "system": system + "\nResponse schema:\n" + json.dumps(schema)}
-            ).input_tokens
+            count = self.client.messages.count_tokens(**request).input_tokens
         except Exception:
             raise ProviderError("token preflight failed; no generation request sent") from None
         reservation = self.budget.reserve(count)
@@ -86,7 +86,6 @@ class ClaudeProvider:
         try:
             response = self.client.messages.create(
                 **request, max_tokens=self.settings.max_output,
-                output_config={"format": {"type": "json_schema", "schema": schema}},
             )
         except Exception:
             self.budget.uncertain()

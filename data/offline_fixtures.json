@@ -1,0 +1,189 @@
+{
+  "analyzer:C001": {
+    "input_sha256": "cbfc3e449cde729b4c21a70e404859a271869918c1b04324461107920bd41848",
+    "output": {
+      "candidate_id": "C001",
+      "evidence": [
+        {
+          "criterion_id": "python",
+          "status": "supported",
+          "quotes": [
+            "Built Python APIs for an internal billing service."
+          ],
+          "rationale": "Direct evidence of Python backend API implementation."
+        },
+        {
+          "criterion_id": "postgres",
+          "status": "supported",
+          "quotes": [
+            "Designed PostgreSQL schemas and migrations."
+          ],
+          "rationale": "Direct evidence of PostgreSQL database design and migration work."
+        },
+        {
+          "criterion_id": "testing",
+          "status": "supported",
+          "quotes": [
+            "Wrote pytest integration tests for payment workflows."
+          ],
+          "rationale": "Explicit automated backend integration testing."
+        },
+        {
+          "criterion_id": "reliability",
+          "status": "supported",
+          "quotes": [
+            "Operated production services and handled on-call incidents."
+          ],
+          "rationale": "Explicit production operations and incident response work."
+        }
+      ]
+    }
+  },
+  "analyzer:C002": {
+    "input_sha256": "c13cb1adddc1e44a3998ab90bb58fd9861aaa93ab0fc0ed786b3c97a27e4bc8f",
+    "output": {
+      "candidate_id": "C002",
+      "evidence": [
+        {
+          "criterion_id": "python",
+          "status": "supported",
+          "quotes": [
+            "Built Python APIs for a document management service."
+          ],
+          "rationale": "Direct evidence of Python backend API implementation."
+        },
+        {
+          "criterion_id": "postgres",
+          "status": "supported",
+          "quotes": [
+            "Designed PostgreSQL schemas and migrations."
+          ],
+          "rationale": "Explicit PostgreSQL design and migration work."
+        },
+        {
+          "criterion_id": "testing",
+          "status": "partial",
+          "quotes": [
+            "Wrote unit tests for utility functions during a training project."
+          ],
+          "rationale": "Some automated testing is documented; backend test scope is unclear."
+        },
+        {
+          "criterion_id": "reliability",
+          "status": "not_stated",
+          "quotes": [],
+          "rationale": "Production operation ownership is not stated; ask the candidate."
+        }
+      ]
+    }
+  },
+  "analyzer:C003": {
+    "input_sha256": "8a3a9deb93a3f01d8d43494c0e2cf69ac8019e3bc046faf6d703f309f7cac55b",
+    "output": {
+      "candidate_id": "C003",
+      "evidence": [
+        {
+          "criterion_id": "python",
+          "status": "supported",
+          "quotes": [
+            "Built Python APIs for a community project."
+          ],
+          "rationale": "Explicit Python API work; project context does not reduce credit."
+        },
+        {
+          "criterion_id": "postgres",
+          "status": "not_stated",
+          "quotes": [],
+          "rationale": "SQLite is documented, but PostgreSQL experience is not stated."
+        },
+        {
+          "criterion_id": "testing",
+          "status": "supported",
+          "quotes": [
+            "Wrote pytest integration tests for API endpoints."
+          ],
+          "rationale": "Explicit automated backend testing of API endpoints."
+        },
+        {
+          "criterion_id": "reliability",
+          "status": "not_stated",
+          "quotes": [],
+          "rationale": "Production operation ownership is not stated; ask the candidate."
+        }
+      ]
+    }
+  },
+  "analyzer:C004": {
+    "input_sha256": "513d6a3423440c1d312cf34a4d885273ac88a4340f6fd989dcd16d961cc0d0e8",
+    "output": {
+      "candidate_id": "C004",
+      "evidence": [
+        {
+          "criterion_id": "python",
+          "status": "partial",
+          "quotes": [
+            "Completed a Python tutorial with basic exercises."
+          ],
+          "rationale": "Python exposure is documented, but backend API implementation is not stated."
+        },
+        {
+          "criterion_id": "postgres",
+          "status": "not_stated",
+          "quotes": [],
+          "rationale": "PostgreSQL experience is not stated; ask the candidate."
+        },
+        {
+          "criterion_id": "testing",
+          "status": "partial",
+          "quotes": [
+            "Wrote automated browser tests for the frontend."
+          ],
+          "rationale": "Automated tests are documented; backend testing is not stated."
+        },
+        {
+          "criterion_id": "reliability",
+          "status": "not_stated",
+          "quotes": [],
+          "rationale": "Production operation ownership is not stated; ask the candidate."
+        }
+      ]
+    }
+  },
+  "judge": {
+    "input_sha256": "4494ba15a23d6cdd7cac2d12d5fab6f6ce53fbad11705577198dc2f0276d1a7a",
+    "output": {
+      "ranking": [
+        {
+          "candidate_id": "C001",
+          "reason": "Evidence covers all four criteria. A human should verify depth and context."
+        },
+        {
+          "candidate_id": "C002",
+          "reason": "Python and PostgreSQL are documented; test scope is partial and operations is not stated."
+        },
+        {
+          "candidate_id": "C003",
+          "reason": "Python APIs and backend tests are documented; PostgreSQL and operations are not stated."
+        },
+        {
+          "candidate_id": "C004",
+          "reason": "Some Python and automated testing exposure is documented; backend depth needs clarification."
+        }
+      ]
+    }
+  },
+  "fairness": {
+    "input_sha256": "5cc4518d3853205481875a60189897444cd81b3d05d67034f004879ca08d02f9",
+    "output": {
+      "findings": [],
+      "human_review_required": true,
+      "summary": "No specific concern flagged in this curated demo. This is not a fairness certification; a person must review all evidence and missing context."
+    }
+  },
+  "hello": {
+    "input_sha256": "39a2270d06aef456a02ed1153806a171efb651fd5376abbbf609387ee9dbbfc4",
+    "output": {
+      "message": "Hello from TalentScout. Evidence first, human review always."
+    }
+  }
+}
